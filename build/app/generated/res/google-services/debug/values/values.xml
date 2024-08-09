@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_database_url" translatable="false">https://object-summer-default-rtdb.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">334877075872</string>
+    <string name="google_api_key" translatable="false">AIzaSyAv2k6L1WFgjO3yYwOdrY_zpQzb1tZccKo</string>
+    <string name="google_app_id" translatable="false">1:334877075872:android:f5fd46ba83c4b204fa9cc5</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAv2k6L1WFgjO3yYwOdrY_zpQzb1tZccKo</string>
+    <string name="google_storage_bucket" translatable="false">object-summer.appspot.com</string>
+    <string name="project_id" translatable="false">object-summer</string>
+</resources>

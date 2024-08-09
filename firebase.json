@@ -1,0 +1,41 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "object-summer",
+                    "appId": "1:334877075872:android:f5fd46ba83c4b204fa9cc5",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "object-summer",
+                    "appId": "1:334877075872:ios:d307414f24034a4afa9cc5",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "macos": {
+                "default": {
+                    "projectId": "object-summer",
+                    "appId": "1:334877075872:ios:d307414f24034a4afa9cc5",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "macos/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "object-summer",
+                    "configurations": {
+                        "android": "1:334877075872:android:f5fd46ba83c4b204fa9cc5",
+                        "ios": "1:334877075872:ios:d307414f24034a4afa9cc5",
+                        "macos": "1:334877075872:ios:d307414f24034a4afa9cc5",
+                        "web": "1:334877075872:web:d0e3321d4ee1e928fa9cc5",
+                        "windows": "1:334877075872:web:1ea33e6591f8a4c9fa9cc5"
+                    }
+                }
+            }
+        }
+    }
+}
