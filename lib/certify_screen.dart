@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';  // fluttertoast 패키지 임포트
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'data/post_data.dart';
-import 'database/database_helper.dart';
+import 'database/firebase_helper.dart';
 import 'feed_screen.dart';
 import 'dart:typed_data';
 
@@ -16,43 +17,65 @@ class _CertifyScreenState extends State<CertifyScreen> {
   Uint8List? _profileImage;
   Uint8List? _feedImage;
 
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   Future<void> _pickImage(bool isProfile) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final bytes = await pickedFile.readAsBytes();
-      setState(() {
-        if (isProfile) {
-          _profileImage = bytes;
-        } else {
-          _feedImage = bytes;
-        }
-      });
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          if (isProfile) {
+            _profileImage = bytes;
+          } else {
+            _feedImage = bytes;
+          }
+        });
+      }
+    } catch (e) {
+      print("이미지 선택 에러: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('이미지 선택에 실패했습니다. 다시 시도해주세요.')),
+      );
     }
   }
 
-  void _submitPost() async {
-    if (_textController.text.isNotEmpty) {
-      // 새로운 게시글을 생성
+  Future<void> _submitPost() async {
+    if (_textController.text.isNotEmpty && _feedImage != null) {
       final newPost = PostData(
-        userId: 1, // 실제 사용자 ID를 여기에 입력
-        challengeId: 1, // 실제 챌린지 ID를 여기에 입력
-        username: 'User', // 사용자 이름을 여기에 입력
+        userId: "test", // 실제 사용자 ID를 설정
+        challengeId: "4", // 실제 챌린지 ID를 설정
+        username: 'User', // 실제 사용자 이름을 설정
         content: _textController.text,
         profileImage: _profileImage,
         feedImage: _feedImage,
-        createAt: DateFormat('yy년 MM월 dd일 HH시 mm분 ss초').format(DateTime.now()),
+        createAt: DateFormat('yyyy년 MM월 dd일 HH시 mm분 ss초').format(DateTime.now()),
       );
 
-      // 데이터베이스에 추가
+      // Firestore에 데이터 추가
       final dbHelper = DatabaseHelper();
-      await dbHelper.insertPost(newPost);
+      await dbHelper.addPost(newPost);
+
+      // 토스트 메시지 표시
+      Fluttertoast.showToast(
+        msg: "제출 성공",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
 
       // 콘솔에 출력
-      print('Post submitted with text: ${_textController.text}');
+      print('포스팅 완료: ${_textController.text}');
 
       // FeedScreen으로 이동
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => FeedScreen(
@@ -60,6 +83,11 @@ class _CertifyScreenState extends State<CertifyScreen> {
             schoolImageUrl: "",
           ),
         ),
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('문구를 작성하고 사진을 업로드해주세요.')),
       );
     }
   }
@@ -92,8 +120,10 @@ class _CertifyScreenState extends State<CertifyScreen> {
                 decoration: InputDecoration(
                   hintText: '문구를 작성해주세요',
                 ),
+                maxLines: null, // 사용자가 여러 줄의 텍스트를 입력할 수 있도록 설정
               ),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitPost,
               child: Text('제출'),

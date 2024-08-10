@@ -42,9 +42,9 @@ class DatabaseHelper {
 
   Future<void> _insertInitialData(Database db) async {
     List<PostData> initialPosts = [
-      PostData(userId: 1, challengeId: 1, username: 'User1', content: '첫 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
-      PostData(userId: 2, challengeId: 2, username: 'User2', content: '두 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
-      PostData(userId: 3, challengeId: 3, username: 'User3', content: '세 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
+      PostData(userId: "test1", challengeId: "1", username: 'User1', content: '첫 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
+      PostData(userId: "test2", challengeId: "2", username: 'User2', content: '두 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
+      PostData(userId: "test3", challengeId: "3", username: 'User3', content: '세 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
     ];
 
     for (var post in initialPosts) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data/post_data.dart';
-import 'database/database_helper.dart';
+import 'database/firebase_helper.dart'; // Firestore와 관련된 헬퍼 클래스라고 가정
 import 'home_screen.dart';
 import 'post_card.dart';
 
@@ -25,7 +25,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Future<void> _loadPosts() async {
     final dbHelper = DatabaseHelper();
-    final loadedPosts = await dbHelper.getPosts();
+    final loadedPosts = await dbHelper.getPosts(); // Firestore에서 데이터를 가져오는 방식으로 가정
     setState(() {
       posts = loadedPosts;
     });
@@ -50,7 +50,7 @@ class _FeedScreenState extends State<FeedScreen> {
             expandedHeight: 200.0,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true, // 제목을 가운데 정렬
+              centerTitle: true,
               title: Text(widget.school),
               background: Container(
                 color: Colors.white,
@@ -58,6 +58,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   child: CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('assets/mju.jpg'),
+                    //AssetImage('assets/mju.jpg');
                   ),
                 ),
               ),
