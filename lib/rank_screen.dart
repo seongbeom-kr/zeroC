@@ -6,7 +6,8 @@ class RankScreen extends StatelessWidget {
     {
       'rank': '1위 명지대학교',
       'carbonSavings': '1000kg 탄소 절약',
-      'imageUrl': 'assets/mju.jpg'
+      'imageUrl': 'assets/mju.jpg',
+      'schoolId': 'mju' // schoolId를 데이터에 포함시킴
     },
     // 다른 순위 데이터는 생략
   ];
@@ -41,8 +42,7 @@ class RankScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FeedScreen(
-                          school:
-                              data[index]['rank']!.split(' ')[1], // 학교 이름만 전달
+                          school: data[index]['rank']!.split(' ')[1], // 학교 이름만 전달
                           schoolImageUrl: data[index]['imageUrl']!,
                         ),
                       ),

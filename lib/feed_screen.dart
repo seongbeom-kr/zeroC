@@ -25,7 +25,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Future<void> _loadPosts() async {
     final dbHelper = DatabaseHelper();
-    final loadedPosts = await dbHelper.getPosts(); // Firestore에서 데이터를 가져오는 방식으로 가정
+    final loadedPosts = await dbHelper.getPosts(); // Firestore에서 모든 데이터를 가져옴
     setState(() {
       posts = loadedPosts;
     });
@@ -57,8 +57,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 child: Center(
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/mju.jpg'),
-                    //AssetImage('assets/mju.jpg');
+                    backgroundImage: AssetImage(widget.schoolImageUrl),
                   ),
                 ),
               ),

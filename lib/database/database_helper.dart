@@ -28,13 +28,14 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE feeds(
         feed_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        challenge_id INTEGER,
+        user_id TEXT,
+        challenge_id TEXT,
         username TEXT,
         content TEXT,
         profile_image BLOB,
         feed_image BLOB,
-        create_at DATETIME
+        create_at TEXT,
+        school_id TEXT
       )
     ''');
     await _insertInitialData(db);
@@ -42,9 +43,36 @@ class DatabaseHelper {
 
   Future<void> _insertInitialData(Database db) async {
     List<PostData> initialPosts = [
-      PostData(userId: "test1", challengeId: "1", username: 'User1', content: '첫 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
-      PostData(userId: "test2", challengeId: "2", username: 'User2', content: '두 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
-      PostData(userId: "test3", challengeId: "3", username: 'User3', content: '세 번째 게시글', profileImage: null, feedImage: null, createAt: DateTime.now().toIso8601String()),
+      PostData(
+        userId: "test1",
+        challengeId: "1",
+        username: 'User1',
+        content: '첫 번째 게시글',
+        profileImage: null,
+        feedImage: null,
+        createAt: DateTime.now().toIso8601String(),
+        schoolId: 'mju',
+      ),
+      PostData(
+        userId: "test2",
+        challengeId: "2",
+        username: 'User2',
+        content: '두 번째 게시글',
+        profileImage: null,
+        feedImage: null,
+        createAt: DateTime.now().toIso8601String(),
+        schoolId: 'mju',
+      ),
+      PostData(
+        userId: "test3",
+        challengeId: "3",
+        username: 'User3',
+        content: '세 번째 게시글',
+        profileImage: null,
+        feedImage: null,
+        createAt: DateTime.now().toIso8601String(),
+        schoolId: 'mju',
+      ),
     ];
 
     for (var post in initialPosts) {
@@ -58,7 +86,7 @@ class DatabaseHelper {
         await db.query('feeds', orderBy: 'feed_id DESC');
     return List.generate(maps.length, (i) {
       return PostData(
-        feedId: maps[i]['feed_id'],
+        feedId: maps[i]['feed_id'].toString(),
         userId: maps[i]['user_id'],
         challengeId: maps[i]['challenge_id'],
         username: maps[i]['username'],
@@ -66,6 +94,7 @@ class DatabaseHelper {
         profileImage: maps[i]['profile_image'],
         feedImage: maps[i]['feed_image'],
         createAt: maps[i]['create_at'],
+        schoolId: maps[i]['school_id'],
       );
     });
   }

@@ -20,6 +20,7 @@ class _CertifyScreenState extends State<CertifyScreen> {
   Uint8List? _feedImage;
   User? _currentUser;
   String? _username;
+  String? _schoolId; // 학교 ID를 저장
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _CertifyScreenState extends State<CertifyScreen> {
           .get();
       setState(() {
         _username = userDoc['name'];
+        _schoolId = userDoc['school_id']; // 유저 문서에서 school_id 가져오기
       });
     } else {
       _username = 'Unknown';
@@ -66,7 +68,8 @@ class _CertifyScreenState extends State<CertifyScreen> {
   void _submitPost() async {
     if (_textController.text.isNotEmpty &&
         _feedImage != null &&
-        _username != null) {
+        _username != null &&
+        _schoolId != null) {
       final newPost = PostData(
         userId: _currentUser?.uid ?? "Unknown",
         challengeId: "4",
@@ -75,6 +78,7 @@ class _CertifyScreenState extends State<CertifyScreen> {
         profileImage: _profileImage,
         feedImage: _feedImage,
         createAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+        schoolId: _schoolId!, // schoolId 저장
       );
 
       final dbHelper = DatabaseHelper();
@@ -91,8 +95,8 @@ class _CertifyScreenState extends State<CertifyScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => FeedScreen(
-            school: "명지대학교", // school 매개변수를 필요에 따라 설정합니다.
-            schoolImageUrl: "", // 필요에 따라 schoolImageUrl을 설정합니다.
+            school: "명지대학교", // 필요에 따라 school 매개변수를 설정
+            schoolImageUrl: "", // 필요에 따라 schoolImageUrl을 설정
           ),
         ),
       );

@@ -11,6 +11,7 @@ class PostData {
   final Uint8List? profileImage;
   final Uint8List? feedImage;
   final String createAt;
+  final String schoolId;
 
   PostData({
     this.feedId,
@@ -21,11 +22,12 @@ class PostData {
     this.profileImage,
     this.feedImage,
     required this.createAt,
+    required this.schoolId,
   });
 
   @override
   String toString() {
-    return 'feedId: $feedId, userId: $userId, challengeId: $challengeId, username: $username, content: $content, createAt: $createAt';
+    return 'feedId: $feedId, userId: $userId, challengeId: $challengeId, username: $username, content: $content, createAt: $createAt, schoolId: $schoolId';
   }
 
   Map<String, Object?> toMap() {
@@ -38,6 +40,7 @@ class PostData {
       'profile_image': profileImage,
       'feed_image': feedImage,
       'create_at': createAt,
+      'school_id': schoolId,
     };
   }
 
@@ -51,6 +54,7 @@ class PostData {
       'profile_image': profileImage != null ? base64Encode(profileImage!) : null,
       'feed_image': feedImage != null ? base64Encode(feedImage!) : null,
       'create_at': createAt,
+      'school_id': schoolId,
     };
   }
 
@@ -58,14 +62,15 @@ class PostData {
   factory PostData.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return PostData(
-      feedId: doc.id,  // 자동 생성된 문서 ID를 feedId로 설정
-      userId: data['user_id'],
-      challengeId: data['challenge_id'],
-      username: data['username'],
-      content: data['content'],
+      feedId: doc.id,
+      userId: data['user_id'] ?? 'Unknown',  // null 안전 처리
+      challengeId: data['challenge_id'] ?? 'Unknown',  // null 안전 처리
+      username: data['username'] ?? 'Unknown',  // null 안전 처리
+      content: data['content'] ?? '',  // null 안전 처리
       profileImage: data['profile_image'] != null ? base64Decode(data['profile_image']) : null,
       feedImage: data['feed_image'] != null ? base64Decode(data['feed_image']) : null,
-      createAt: data['create_at'],
+      createAt: data['create_at'] ?? 'Unknown',  // null 안전 처리
+      schoolId: data['school_id'] ?? 'Unknown',  // null 안전 처리
     );
   }
 }

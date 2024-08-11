@@ -14,10 +14,11 @@ class DatabaseHelper {
 
   Future<List<PostData>> getPosts() async {
     try {
-      QuerySnapshot snapshot = await _firestore.collection('Feed')
-        .orderBy('create_at', descending: true)  // createAt 필드 기준으로 내림차순 정렬
-        .get();
-        
+      QuerySnapshot snapshot = await _firestore
+          .collection('Feed')
+          .orderBy('create_at', descending: true) // createAt 필드 기준으로 내림차순 정렬
+          .get();
+
       return snapshot.docs.map((doc) => PostData.fromFirestore(doc)).toList();
     } catch (e) {
       print("Error getting posts: $e");
