@@ -11,13 +11,6 @@ class PostCard extends StatelessWidget {
     // createAt 필드가 문자열로 되어 있다면, 이 문자열을 날짜 형식으로 변환
     String formattedDate = post.createAt;
 
-    // 만약 createAt이 타임스탬프이거나 특정 포맷의 문자열이라면, 이를 DateTime으로 파싱
-    try {
-      final DateTime parsedDate = DateTime.parse(post.createAt);
-    } catch (e) {
-      // 파싱 실패 시 원본 문자열 그대로 사용
-    }
-
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
